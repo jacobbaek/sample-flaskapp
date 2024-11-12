@@ -1,20 +1,21 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: sample-flaskapp
+  name: sample-flaskapp-usewi
   labels:
-    app: sample-flaskapp
+    app: sample-flaskapp-usewi
+    azure.workload.identity/use: "true"
 spec:
+  serviceAccountName: testsa
   containers:
   - image: dubaek/sample-flaskapp:v0.2
     imagePullPolicy: IfNotPresent
-    name: sample-flaskapp
+    name: sample-flaskapp-usewi
     env:
     - name: STORAGE_ACCOUNT_URL
       value: "https://<storageaccountname>.blob.core.windows.net/"
     - name: BLOB_NAME
       value: "<blobname>"
-
   nodeSelector:
     kubernetes.io/os: linux
   restartPolicy: Always
@@ -22,10 +23,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: sample-flaskapp
+  name: sample-flaskapp-usewi
 spec:
   selector:
-    app: sample-flaskapp
+    app: sample-flaskapp-usewi
   ports:
   - protocol: TCP
     port: 80
