@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sample-flaskapp
+  labels:
+    app: sample-flaskapp
+spec:
+  containers:
+  - image: dubaek/sample-flaskapp:v1
+    imagePullPolicy: IfNotPresent
+    name: sample-flaskapp
+  nodeSelector:
+    kubernetes.io/os: linux
+  restartPolicy: Always
